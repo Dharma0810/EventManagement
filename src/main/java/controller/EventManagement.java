@@ -30,7 +30,10 @@ public class EventManagement {
 	ClientServiceDao csdao = new ClientServiceDao();
 
 	public static void main(String[] args) {
-		
+
+		EventManagement em = new EventManagement();
+
+		em.createClientEvent();
 	}
 
 	public Admin saveAdmin() {
@@ -196,12 +199,14 @@ public class EventManagement {
 		client.setClientContact(sc.nextLong());
 		System.out.println("Enter Client Email :");
 		client.setClientMail(sc.next());
+		System.out.println("Enter Password :");
+		client.setPassword(sc.next());
 
 		return cdao.saveClient(client);
 	}
-	
+
 	public Client clientLogin() {
-		
+
 		Scanner sc = new Scanner(System.in);
 
 		System.out.println("Enter Client Email : ");
@@ -230,336 +235,170 @@ public class EventManagement {
 			return null;
 		}
 	}
-	
-	public void createClientEvent() {
-		
+
+	public Client createClientEvent() {
+
 		Scanner sc = new Scanner(System.in);
-		
+
 		System.out.println("Enter Your Credentials to Proceed..!");
-		
+
 		Client exClient = clientLogin();
-		
-		if(exClient != null) {
-			
+
+		if (exClient != null) {
+
 			System.out.println("\n Event List \n");
-			
+
 			byte count = 1;
-			for (EventType event : EventType.values()) {
-				System.out.println(count+". "+event);
+			for (EventType ce : EventType.values()) {
+				System.out.println(count + ". " + ce);
 				count++;
 			}
-			
-			List<ClientEvent> cevents = new ArrayList<ClientEvent>();
+
+			List<ClientEvent> cces = new ArrayList<ClientEvent>();
 			ClientEvent ce = new ClientEvent();
-			
+
 			System.out.print("Enter Event Number : ");
 			switch (sc.nextInt()) {
-			case 1:{
-				System.out.print("Enter No. of People : ");
-				byte numberOfPeople = sc.nextByte();
-				ce.setClientEventNoOfPeople(numberOfPeople);
-				System.out.print("Enter No. of Days : ");
-				ce.setClientEventNoOfDays(sc.nextByte());
-				System.out.print("Enter Start Date : ");
-				ce.setStartDate(LocalDate.parse(sc.next()));
-				System.out.print("Enter Event Location : ");
-				ce.setClientEventLocation(sc.next());
-				ce.setClient(exClient);
-				List<ClientService> cservice = listOfService();
-				ce.setClientServices(cservice);
-				ce.setEventType(EventType.Marriage);
-				
-				double totalAmount = 0;
-				
-				for (ClientService cs : cservice) {
-					totalAmount += (numberOfPeople*cs.getClientServiceCostPerPerson())+cs.getClientServiceCost();
-				}
-				
-				ce.setClientEventCost(totalAmount);
-				
-				cedao.saveClientEvent(ce);
-				cevents.add(ce);
-				exClient.setEvents(cevents);
-				cdao.updateClient(exClient, exClient.getClientId());
-				break;
-			}
-			case 2:{
-				System.out.print("Enter No. of People : ");
-				byte numberOfPeople = sc.nextByte();
-				ce.setClientEventNoOfPeople(numberOfPeople);
-				System.out.print("Enter No. of Days : ");
-				ce.setClientEventNoOfDays(sc.nextByte());
-				System.out.print("Enter Start Date : ");
-				ce.setStartDate(LocalDate.parse(sc.next()));
-				System.out.print("Enter Event Location : ");
-				ce.setClientEventLocation(sc.next());
-				ce.setClient(exClient);
-				List<ClientService> cservice = listOfService();
-				ce.setClientServices(cservice);
-				ce.setEventType(EventType.Engagement);
-				
-				double totalAmount = 0;
-				
-				for (ClientService cs : cservice) {
-					totalAmount += (numberOfPeople*cs.getClientServiceCostPerPerson())+cs.getClientServiceCost();
-				}
-				
-				ce.setClientEventCost(totalAmount);
-				
-				cedao.saveClientEvent(ce);
-				cevents.add(ce);
-				exClient.setEvents(cevents);
-				cdao.updateClient(exClient, exClient.getClientId());
-				break;
-			}
-			case 3:{
-				System.out.print("Enter No. of People : ");
-				byte numberOfPeople = sc.nextByte();
-				ce.setClientEventNoOfPeople(numberOfPeople);
-				System.out.print("Enter No. of Days : ");
-				ce.setClientEventNoOfDays(sc.nextByte());
-				System.out.print("Enter Start Date : ");
-				ce.setStartDate(LocalDate.parse(sc.next()));
-				System.out.print("Enter Event Location : ");
-				ce.setClientEventLocation(sc.next());
-				ce.setClient(exClient);
-				List<ClientService> cservice = listOfService();
-				ce.setClientServices(cservice);
-				ce.setEventType(EventType.Birthday);
-				
-				double totalAmount = 0;
-				
-				for (ClientService cs : cservice) {
-					totalAmount += (numberOfPeople*cs.getClientServiceCostPerPerson())+cs.getClientServiceCost();
-				}
-				
-				ce.setClientEventCost(totalAmount);
-				
-				cedao.saveClientEvent(ce);
-				cevents.add(ce);
-				exClient.setEvents(cevents);
-				cdao.updateClient(exClient, exClient.getClientId());
-				break;
-			}
-			case 4:{
-				System.out.print("Enter No. of People : ");
-				byte numberOfPeople = sc.nextByte();
-				ce.setClientEventNoOfPeople(numberOfPeople);
-				System.out.print("Enter No. of Days : ");
-				ce.setClientEventNoOfDays(sc.nextByte());
-				System.out.print("Enter Start Date : ");
-				ce.setStartDate(LocalDate.parse(sc.next()));
-				System.out.print("Enter Event Location : ");
-				ce.setClientEventLocation(sc.next());
-				ce.setClient(exClient);
-				List<ClientService> cservice = listOfService();
-				ce.setClientServices(cservice);
+			case 1:
 				ce.setEventType(EventType.Anniversary);
-				
-				double totalAmount = 0;
-				
-				for (ClientService cs : cservice) {
-					totalAmount += (numberOfPeople*cs.getClientServiceCostPerPerson())+cs.getClientServiceCost();
-				}
-				
-				ce.setClientEventCost(totalAmount);
-				
-				cedao.saveClientEvent(ce);
-				cevents.add(ce);
-				exClient.setEvents(cevents);
-				cdao.updateClient(exClient, exClient.getClientId());
 				break;
-			}
-			case 5:{
-				System.out.print("Enter No. of People : ");
-				byte numberOfPeople = sc.nextByte();
-				ce.setClientEventNoOfPeople(numberOfPeople);
-				System.out.print("Enter No. of Days : ");
-				ce.setClientEventNoOfDays(sc.nextByte());
-				System.out.print("Enter Start Date : ");
-				ce.setStartDate(LocalDate.parse(sc.next()));
-				System.out.print("Enter Event Location : ");
-				ce.setClientEventLocation(sc.next());
-				ce.setClient(exClient);
-				List<ClientService> cservice = listOfService();
-				ce.setClientServices(cservice);
+			case 2:
 				ce.setEventType(EventType.BabyShower);
-				
-				double totalAmount = 0;
-				
-				for (ClientService cs : cservice) {
-					totalAmount += (numberOfPeople*cs.getClientServiceCostPerPerson())+cs.getClientServiceCost();
-				}
-				
-				ce.setClientEventCost(totalAmount);
-				
-				cedao.saveClientEvent(ce);
-				cevents.add(ce);
-				exClient.setEvents(cevents);
-				cdao.updateClient(exClient, exClient.getClientId());
 				break;
-			}
-			case 6:{
-				System.out.print("Enter No. of People : ");
-				byte numberOfPeople = sc.nextByte();
-				ce.setClientEventNoOfPeople(numberOfPeople);
-				System.out.print("Enter No. of Days : ");
-				ce.setClientEventNoOfDays(sc.nextByte());
-				System.out.print("Enter Start Date : ");
-				ce.setStartDate(LocalDate.parse(sc.next()));
-				System.out.print("Enter Event Location : ");
-				ce.setClientEventLocation(sc.next());
-				ce.setClient(exClient);
-				List<ClientService> cservice = listOfService();
-				ce.setClientServices(cservice);
-				ce.setEventType(EventType.Reunion);
-				
-				double totalAmount = 0;
-				
-				for (ClientService cs : cservice) {
-					totalAmount += (numberOfPeople*cs.getClientServiceCostPerPerson())+cs.getClientServiceCost();
-				}
-				
-				ce.setClientEventCost(totalAmount);
-				
-				cedao.saveClientEvent(ce);
-				cevents.add(ce);
-				exClient.setEvents(cevents);
-				cdao.updateClient(exClient, exClient.getClientId());
-				break;
-			}
-			case 7:{
-				System.out.print("Enter No. of People : ");
-				byte numberOfPeople = sc.nextByte();
-				ce.setClientEventNoOfPeople(numberOfPeople);
-				System.out.print("Enter No. of Days : ");
-				ce.setClientEventNoOfDays(sc.nextByte());
-				System.out.print("Enter Start Date : ");
-				ce.setStartDate(LocalDate.parse(sc.next()));
-				System.out.print("Enter Event Location : ");
-				ce.setClientEventLocation(sc.next());
-				ce.setClient(exClient);
-				List<ClientService> cservice = listOfService();
-				ce.setClientServices(cservice);
-				ce.setEventType(EventType.NamingCeremony);
-				
-				double totalAmount = 0;
-				
-				for (ClientService cs : cservice) {
-					totalAmount += (numberOfPeople*cs.getClientServiceCostPerPerson())+cs.getClientServiceCost();
-				}
-				
-				ce.setClientEventCost(totalAmount);
-				
-				cedao.saveClientEvent(ce);
-				cevents.add(ce);
-				exClient.setEvents(cevents);
-				cdao.updateClient(exClient, exClient.getClientId());
-				break;
-			}
-			case 8:{
-				System.out.print("Enter No. of People : ");
-				byte numberOfPeople = sc.nextByte();
-				ce.setClientEventNoOfPeople(numberOfPeople);
-				System.out.print("Enter No. of Days : ");
-				ce.setClientEventNoOfDays(sc.nextByte());
-				System.out.print("Enter Start Date : ");
-				ce.setStartDate(LocalDate.parse(sc.next()));
-				System.out.print("Enter Event Location : ");
-				ce.setClientEventLocation(sc.next());
-				ce.setClient(exClient);
-				List<ClientService> cservice = listOfService();
-				ce.setClientServices(cservice);
+			case 3:
 				ce.setEventType(EventType.BachelorParty);
-				
-				double totalAmount = 0;
-				
-				for (ClientService cs : cservice) {
-					totalAmount += (numberOfPeople*cs.getClientServiceCostPerPerson())+cs.getClientServiceCost();
-				}
-				
-				ce.setClientEventCost(totalAmount);
-				
-				cedao.saveClientEvent(ce);
-				cevents.add(ce);
-				exClient.setEvents(cevents);
-				cdao.updateClient(exClient, exClient.getClientId());
 				break;
-			}
+			case 4:
+				ce.setEventType(EventType.Birthday);
+				break;
+			case 5:
+				ce.setEventType(EventType.Engagement);
+				break;
+			case 6:
+				ce.setEventType(EventType.Marriage);
+				break;
+			case 7:
+				ce.setEventType(EventType.NamingCeremony);
+				break;
+			case 8:
+				ce.setEventType(EventType.Reunion);
+				break;
 			default:
-				System.out.println("Enter Correct Event Number...");
-				break;
+				ce.setEventType(EventType.Birthday);
+				break;			
 			}
+			System.out.println("enter the ce location");
+			String ceLocation = sc.next();
+			ce.setClientEventLocation(ceLocation);
+
+			System.out.println("enter the " + ce.getEventType() + " year");
+			int year = sc.nextInt();
+			System.out.println("enter the " + ce.getEventType() + " month");
+			int month = sc.nextInt();
+			System.out.println("enter the " + ce.getEventType() + " date");
+			int day = sc.nextInt();
+			ce.setStartDate(LocalDate.of(year, month, day));
+
+			System.out.println("enter number of days for the ce");
+			ce.setClientEventNoOfDays(sc.nextInt());
+
+			System.out.println("enter the number of people that will be attending the ce");
+			ce.setClientEventNoOfPeople(sc.nextInt());
+
+			ClientEvent savedEvent = cedao.saveClientEvent(ce);
+
+			savedEvent.setClient(exClient);
+			exClient.getEvents().add(savedEvent);
+
+			return cdao.updateClient(exClient, exClient.getClientId());
 		}
+		return null;
 	}
-	
-	public List<ClientService> listOfService() {
+
+	public void addEventServices() {
 		
 		Scanner sc = new Scanner(System.in);
-		List<ClientService> cslist = new ArrayList<ClientService>();
-				
-		List<Service> lservices = getAllServices();
 		
-		int count = 1;
-		System.out.println("----- List of Services -----\n");
-		for (Service s : lservices) {
-			System.out.println(count+". "+s.getServiceName()+"     "+s.getServiceCostPerPerson()+"     "+s.getServiceCostPerDay());
-			count++;
-		}
-		System.out.println(count+". For Exit");
-		
-		boolean loop = true;
-		
-		do {
-			
-			System.out.println("\nEnter Your Choice to Proceed..!");
-			byte choice = sc.nextByte();
-			
-			switch (choice) {
-			case 1:{
-				
-				Service s = sdao.findService(1);
-				
-				ClientService cs = new ClientService();
-				
-				cs.setClientServiceName(s.getServiceName());
-				System.out.print("Enter No. of Days : ");
-				byte days = sc.nextByte();
-				cs.setClientServiceNoOfDays(days);
-				cs.setClientServiceCostPerPerson(s.getServiceCostPerPerson());
-				cs.setClientServiceCost(days*s.getServiceCostPerDay());
-				
-				csdao.saveClientService(cs);
-				cslist.add(cs);
-				
-				break;
+		Client client = clientLogin();
+		if (client != null) {
+			for (ClientEvent event : client.getEvents()) {
+				System.out.println("Event Id   " + "Event type   " + "Event location");
+				System.out.println(
+						event.getClientEventId() + " " + event.getEventType() + " " + event.getClientEventLocation());
 			}
-			case 2:{
-				
-				Service s = sdao.findService(2);
-				
-				ClientService cs = new ClientService();
-				
-				cs.setClientServiceName(s.getServiceName());
-				System.out.print("Enter No. of Days : ");
-				byte days = sc.nextByte();
-				cs.setClientServiceNoOfDays(days);
-				cs.setClientServiceCostPerPerson(s.getServiceCostPerPerson());
-				cs.setClientServiceCost(days*s.getServiceCostPerDay());
-				
-				csdao.saveClientService(cs);
-				cslist.add(cs);
-				break;
-			}
-			case 3:
-				loop = false;
 
-			default:
-				System.out.println("Enter Correct Choice...");
+			System.out.println("Enter the event id you want to add services to");
+			int eventid = sc.nextInt();
+			ClientEvent event = cedao.findClientEvent(eventid);
+			if (event != null) {
+				Admin admin = adminLogin();
+				if (admin != null) {
+					System.out.println("ener the number of services you want to add to the event");
+					int count = sc.nextInt();
+					while (count > 0) {
+
+						for (Service cs : admin.getServices()) {
+							System.out.println(cs.getServiceId() + " " + cs.getServiceName());
+						}
+						System.out.println("enter the service id you want to choose");
+						int serviceId = sc.nextInt();
+
+						Service exService = sdao.findService(serviceId);
+						ClientService cs = new ClientService();
+//						cs.setClientServiceCost(exService.getServiceCostPerDay() * exService.getServiceCostPerPerson() * event.getClientEventNoOfDays());
+						cs.setClientServiceName(exService.getServiceName());
+						cs.setClientServiceNoOfDays(event.getClientEventNoOfDays());
+						cs.setClientServiceCostPerPerson(exService.getServiceCostPerPerson());
+
+						if (exService.getServiceCostPerPerson() == 0) {
+							cs.setClientServiceCost(exService.getServiceCostPerDay() * event.getClientEventNoOfDays());
+						} else {
+							cs.setClientServiceCost(exService.getServiceCostPerDay() * event.getClientEventNoOfDays()
+									* exService.getServiceCostPerPerson());
+
+						}
+						event.setClientEventCost(event.getClientEventCost() + cs.getClientServiceCost());
+						event.getClientServices().add(cs);
+						cedao.updateClientEvent(event, event.getClientEventId());
+						count--;
+
+					}
+				} // admin credentials are wrong to get all the services
+			} // event does not exist with given event id
+
+		} // client login failed
+	}
+
+	public ClientEvent deleteEventService() {
+		
+		Scanner sc = new Scanner(System.in);
+		
+		Client client = clientLogin();
+		if (client != null) {
+			for (ClientEvent event : client.getEvents()) {
+				System.out.println(event.getClientEventId()+" "+event.getEventType());
 			}
 			
-		} while (loop);
-		
-		return cslist;
+			
+			System.out.println("choose the  event from which you want to remove a service");
+			int eventId = sc.nextInt();
+			ClientEvent event = cedao.findClientEvent(eventId);
+			List<ClientService> services = event.getClientServices();
+			for(ClientService service: services) {
+				System.out.println(service.getClientServiceId()+" "+service.getClientServiceName());
+			}
+			System.out.println("enter the service id you want to delete from event");
+			int sid = sc.nextInt();
+			for(ClientService service: services) {
+				if(service.getClientServiceId()==sid) {
+					services.remove(service);
+				}
+			}
+			event.setClientServices(services);
+			
+			cedao.updateClientEvent(event,event.getClientEventId());
+			return event;
+		}
+		return null; // wrong client credentials
 	}
 }
